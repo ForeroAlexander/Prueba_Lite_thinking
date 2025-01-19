@@ -15,26 +15,4 @@ public class InventarioService {
 
     private final ProductoRepository productoRepository;
     private final PdfService pdfService;
-    private final AwsService awsService;
-
-    public String generarYEnviarReporteInventario(InventarioDTO dto) throws Exception {
-        List<Producto> productos = productoRepository.findAll();
-        File pdfFile = pdfService.generarPdfInventario(productos);
-        String nombreArchivo = pdfFile.getName();
-        String s3Url = awsService.subirArchivoS3(pdfFile, nombreArchivo);
-
-        awsService.enviarEmail(
-                dto.getEmailDestino(),
-                "Reporte de Inventario",
-                "Adjunto encontrará el reporte de inventario. También puede descargarlo desde el siguiente enlace:",
-                s3Url
-        );
-        pdfFile.delete();
-        return s3Url;
-    }
-
-    public File generarReporteDescargable() throws Exception {
-        List<Producto> productos = productoRepository.findAll();
-        return pdfService.generarPdfInventario(productos);
-    }
 }

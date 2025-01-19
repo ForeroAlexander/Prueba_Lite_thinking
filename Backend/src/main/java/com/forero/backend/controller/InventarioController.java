@@ -31,21 +31,6 @@ public class InventarioController {
     private final ProductoRepository productoRepository;
     private final PdfService pdfService;
 
-    @PostMapping("/reporte")
-    @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Map<String, String>> generarReporte(@Valid @RequestBody InventarioDTO inventarioDTO) {
-        try {
-            String url = inventarioService.generarYEnviarReporteInventario(inventarioDTO);
-            return ResponseEntity.ok(Map.of(
-                    "mensaje", "Reporte generado y enviado correctamente",
-                    "url", url
-            ));
-        } catch (Exception e) {
-            return ResponseEntity.internalServerError().body(Map.of(
-                    "error", "Error al generar el reporte: " + e.getMessage()
-            ));
-        }
-    }
 
     @GetMapping("/download")
     @PreAuthorize("hasRole('ADMIN')")

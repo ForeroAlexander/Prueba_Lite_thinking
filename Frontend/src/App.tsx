@@ -12,7 +12,6 @@ export default function App() {
       <AuthProvider>
         <Routes>
           <Route path="/" element={<Layout />}>
-            <Route index element={<div>Bienvenido al Sistema Empresarial</div>} />
             <Route path="login" element={<Login />} />
             <Route path="empresas" element={<Companies />} />
             <Route path="productos" element={<Products />} />
